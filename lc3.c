@@ -21,9 +21,11 @@ enum{
 };
 uint16_t reg[R_COUNT];
 
+//R_COND register stores information about last executed condition
+
 //Opcodes
 //operation codes are the atomic tasks cpu can perform 
-//here opcodes are 16 bit unsigned integers
+//here opcodes are left most 4bits in 16bit instruction
 enum{
     OP_BR = 0, //branch
     OP_ADD, //add
@@ -41,4 +43,11 @@ enum{
     OP_RES, // reserved
     OP_LEA, // load effective address
     OP_TRAP, // executive trap
+};
+
+//condition flags
+enum{
+    FL_POS = 1<<0,
+    FL_ZRO = 1<<1,
+    FL_NEG = 1<<2,
 };
