@@ -51,3 +51,62 @@ enum{
     FL_ZRO = 1<<1,
     FL_NEG = 1<<2,
 };
+int main(int argc,char *argv[]){
+
+    reg[R_COND] = FL_ZRO;
+
+    //default address
+    enum{ PC_START = 0x3000};
+    reg[R_PC] = PC_START;
+
+    int running = 1;
+    while(running){
+        uint16_t instr = mem_read(reg[R_PC]++);
+
+        //opcodes are stored in first 4 bits other operands are stored in the next
+        uint16_t op = instr>>12;
+        switch (op)
+        {
+        case OP_ADD:
+            //add
+            break;
+        case OP_AND:
+            //bitwise and
+            break;
+        case OP_NOT:
+            //bitwise not
+            break;
+        case OP_BR:
+            //branch
+            break;
+        case OP_JMP:
+            //jump
+            break;
+        case OP_JSR:
+            //jump register
+            break;
+        case OP_LD:
+            //load
+            break;
+        case OP_LDI:
+            break;
+        case OP_LDR:
+            break;
+        case OP_LEA:
+            break;
+        case OP_ST:
+            break;
+        case OP_STI:
+            break;
+        case OP_STR:
+            break;
+        case OP_TRAP:
+            break;
+        case OP_RES:
+        case OP_RTI:
+        default:
+            //bad opcode
+            break;
+        }
+    }
+}
