@@ -53,6 +53,19 @@ enum{
 };
 int main(int argc,char *argv[]){
 
+    //load arguments
+    if(argc<2){
+        printf("lc3 [image-file1] \n");
+        exit(2);
+    }
+    //j from 1 because ./a.out is also in arguments.
+    for(int j=1;j<argc;j++){
+        if(!read_image(argv[j])){
+            printf("failed to load image %s\n",argv[j]);
+            exit(1);
+        }
+    }
+
     reg[R_COND] = FL_ZRO;
 
     //default address
