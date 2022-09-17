@@ -51,6 +51,15 @@ enum{
     FL_ZRO = 1<<1,
     FL_NEG = 1<<2,
 };
+
+//sign extend
+//convert lower bit number to a 16 bit number
+uint16_t sign_extend(uint16_t x,int bit_count){
+    if((x>>(bit_count-1))&(1)){
+        x |= (0xFFFF <<bit_count);
+    }
+    return x;
+}
 int main(int argc,char *argv[]){
 
     //load arguments
@@ -82,6 +91,8 @@ int main(int argc,char *argv[]){
         {
         case OP_ADD:
             //add
+            //there are two types of add instructions.
+            //immediate mode and register mode
             break;
         case OP_AND:
             //bitwise and
