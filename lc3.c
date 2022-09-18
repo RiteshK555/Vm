@@ -54,14 +54,16 @@ enum{
 
 //update flags
 void update_flags(uint16_t r){
+    //updating condition register based on 
+    //previously executed instruction.
     if(reg[r]==0){
-        reg[r] = FL_ZRO;
+        reg[R_COND] = FL_ZRO;
     }
     else if(reg[r]>>15){
         //left most bit is set if it is one
-        reg[r] = FL_NEG;
+        reg[R_COND] = FL_NEG;
     }else{
-        reg[r] = FL_POS;
+        reg[R_COND] = FL_POS;
     }
 }
 
@@ -106,6 +108,23 @@ int main(int argc,char *argv[]){
             //add
             //there are two types of add instructions.
             //immediate mode and register mode
+            {   
+                //destination register (DR)
+                uint16_t r0 = (instr>>9)&(0x7);
+                //first operand (SR1)
+                uint16_t r1 = (instr>>6)&(0x7);
+                
+                //check for register mode of immediate mode
+                uint16_t imm_flag = (instr>>5)&(0x1);
+                if(imm_flag){
+                    uint16_t imm5 = sign_extend((instr>>5)&(0x1F),5);
+                    reg[r0] = reg[r1]+imm5;
+                }else{
+                    uint16_t r2 = instr & 0x7;
+                    reg[r0] = reg[r1]+reg[r2];
+                }
+                update_flags(r0);
+            }
             break;
         case OP_AND:
             //bitwise and
