@@ -52,6 +52,19 @@ enum{
     FL_NEG = 1<<2,
 };
 
+//update flags
+void update_flags(uint16_t r){
+    if(reg[r]==0){
+        reg[r] = FL_ZRO;
+    }
+    else if(reg[r]>>15){
+        //left most bit is set if it is one
+        reg[r] = FL_NEG;
+    }else{
+        reg[r] = FL_POS;
+    }
+}
+
 //sign extend
 //convert lower bit number to a 16 bit number
 uint16_t sign_extend(uint16_t x,int bit_count){
