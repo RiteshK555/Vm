@@ -154,6 +154,13 @@ int main(int argc,char *argv[]){
             break;
         case OP_BR:
             //branch
+            {
+                uint16_t pc_offset = sign_extend(instr & 0x1FF,9);
+                uint16_t cond_flag = (instr>>9) & (0x7);
+                if(cond_flag & reg[R_COND]){
+                    reg[R_PC] += pc_offset;
+                }
+            }
             break;
         case OP_JMP:
             //jump
@@ -188,7 +195,17 @@ int main(int argc,char *argv[]){
         case OP_TRAP:
             break;
         case OP_RES:
+            {   
+                //unused
+                abort();
+            }
+            break;  
         case OP_RTI:
+            {
+                //unused
+                abort();
+            }
+            break;
         default:
             //bad opcode
             abort();
