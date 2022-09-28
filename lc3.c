@@ -164,6 +164,11 @@ int main(int argc,char *argv[]){
             break;
         case OP_JMP:
             //jump
+            //program jumps to the specified memory address
+            {
+                uint16_t r1 = (instr >> 6) & 0x7;
+                reg[R_PC] = reg[r1];
+            }
             break;
         case OP_JSR:
             //jump register
