@@ -186,12 +186,18 @@ int main(int argc,char *argv[]){
             break;
         case OP_LD:
             //load
+            {
+                uint16_t r0 = (instr >> 9) & (0x7);
+                uint16_t pc_offset = sign_extend(instr & 0x1FF,9);
+                reg[r0] = mem_read(reg[R_PC]+pc_offset);
+                update_flags(r0);
+            }
             break;
         case OP_LDI:
             {
                 //destination register
                 uint16_t r0 = (instr>>9)&(0x7);
-                //program counter offset
+                //program couunter offset
                 uint16_t pc_offset = sign_extend(instr & (0x1FF),9);
 
                 reg[r0] = mem_read(meme_read(reg[R_PC]+pc_offset));
